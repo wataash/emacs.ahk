@@ -220,6 +220,12 @@ scroll_down()
     Send {PgDn}
   Return
 }
+mark_whole_buffer()
+{
+  Send, ^a
+  global is_pre_x = 0
+  Return
+}
 
 
 ^x::
@@ -258,7 +264,12 @@ scroll_down()
   If is_target()
     Send %A_ThisHotkey%
   Else
-    delete_backward_char()
+  {
+    If is_pre_x
+      mark_whole_buffer()
+    Else
+      delete_backward_char()
+  }
   Return
 ^k::
   If is_target()
